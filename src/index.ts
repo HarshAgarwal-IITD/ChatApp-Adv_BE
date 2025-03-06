@@ -1,5 +1,7 @@
 import { WebSocketServer,WebSocket } from "ws";
+import { UserModel,RoomModel } from "./db";
 const wss = new WebSocketServer({port:8080});
+
 let count =0;
 interface User{
     socket:WebSocket,
