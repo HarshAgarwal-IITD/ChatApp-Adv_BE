@@ -1,49 +1,34 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const ws_1 = require("ws");
-const wss = new ws_1.WebSocketServer({ port: 8080 });
-let count = 0;
-let allSockets = [];
-wss.on('connection', (socket) => {
-    count++;
-    console.log('userConnected', count);
-    socket.on('message', (message) => {
-        var _a;
-        let messageToSend = {
-            type: '', message: ""
-        };
-        const parsedMsg = JSON.parse(message);
-        if (parsedMsg.type == 'exit') {
-            allSockets.filter(s => s.socket != socket);
-            messageToSend.type = "dialogue";
-            messageToSend.message = "successfully exited the room";
-            socket.send(JSON.stringify(messageToSend));
-        }
-        if (parsedMsg.type === 'join') {
-            allSockets.push({ socket, room: parsedMsg.payload.roomId });
-            messageToSend.type = "dialogue";
-            messageToSend.message = "successfully joined roomId: " + parsedMsg.payload.roomId;
-            socket.send(JSON.stringify(messageToSend));
-            console.log(messageToSend);
-        }
-        if (parsedMsg.type == 'chat') {
-            let currentUserRoom = (_a = allSockets.find((s) => s.socket == socket)) === null || _a === void 0 ? void 0 : _a.room;
-            console.log(parsedMsg);
-            const userMessage = parsedMsg.payload.message;
-            if (!currentUserRoom) {
-                messageToSend.type = "dialogue";
-                messageToSend.message = "join a room first to send messages";
-                socket.send(JSON.stringify(messageToSend));
-            }
-            else {
-                allSockets.forEach((u) => {
-                    if (u.room == currentUserRoom && u.socket !== socket) {
-                        messageToSend.type = "member";
-                        messageToSend.message = userMessage;
-                        u.socket.send(JSON.stringify(messageToSend));
-                    }
-                });
-            }
-        }
-    });
+const express_1 = __importDefault(require("express"));
+const http_1 = __importDefault(require("http"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const roomRoutes_1 = __importDefault(require("./routes/roomRoutes"));
+const chatSocket_1 = require("./websocket/chatSocket");
+const mongoose_1 = __importDefault(require("mongoose"));
+const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+dotenv_1.default.config();
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL || 'SECRET';
+console.log("Server running on port:", process.env.PORT);
+mongoose_1.default.connect(MONGO_URL);
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175",], // Your frontend URL
+    credentials: true, // ✅ Allow cookies
+}));
+app.use(express_1.default.json());
+app.use((0, cookie_parser_1.default)());
+app.use('/api/auth', authRoutes_1.default);
+app.use('/api/rooms', roomRoutes_1.default);
+const server = http_1.default.createServer(app);
+(0, chatSocket_1.setupWebSocketServer)(server);
+//@ts-ignore
+server.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

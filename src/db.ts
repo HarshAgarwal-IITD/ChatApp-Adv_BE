@@ -1,16 +1,20 @@
 import mongoose, { model,Schema } from "mongoose";
-import { MONGO_URL } from "./config";
+
 // Replace the uri string with your connection string.
-mongoose.connect(MONGO_URL);
+
  const RoomSchema = new Schema({
-    messages: [{message:String,user:{type:mongoose.Types.ObjectId , ref:"User"}}],
-    users: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, 
+    messages: [{message:String,
+      member:{type:mongoose.Types.ObjectId , ref:"User"},
+      timestamp: { type: Date, default: Date.now }
+      }],
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    name:{type:String,required:true,unique:true} 
  })
 
  const UserSchema = new Schema({
-    username:String,
-    password:String,
-    email:{String , unique:true},
+    username:{type:String  ,required:true},
+    password:{type:String ,required:true},
+    email:{type:String , unique:true ,required:true},
    
 
  })
