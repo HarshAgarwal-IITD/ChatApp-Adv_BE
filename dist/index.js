@@ -25,7 +25,11 @@ const app = (0, express_1.default)();
 //   allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],
 //   enablePreflight:true,
 // }
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/api/auth', authRoutes_1.default);

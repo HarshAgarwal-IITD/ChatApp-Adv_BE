@@ -27,14 +27,15 @@ const app = express();
 //   enablePreflight:true,
   
 // }
-app.use(
-  cors({
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
+app.use(cors({
+  origin: 'https://chatapp-adv-fe-production.up.railway.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 
+// Explicitly handle OPTIONS requests if needed
+app.options('*', cors()); // Enable pre-flight for all routes
 
 
 
