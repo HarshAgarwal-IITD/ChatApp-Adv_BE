@@ -21,7 +21,7 @@ mongoose.connect(MONGO_URL)
 const app = express();
 app.use(
   cors({
-    origin: ["https://chatapp-adv-fe-production.up.railway.app/","http://localhost:5173","http://localhost:5175",], // Your frontend URL
+    origin: ["https://chatapp-adv-fe-production.up.railway.app","http://localhost:5173","http://localhost:5175",], // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // ✅ Allow cookies
   })
