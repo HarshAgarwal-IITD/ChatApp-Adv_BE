@@ -25,12 +25,19 @@ const app = (0, express_1.default)();
 //   allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],
 //   enablePreflight:true,
 // }
-app.use((0, cors_1.default)({
-    origin: 'https://chatapp-adv-fe-production.up.railway.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+// app.use(cors({
+//   origin: 'https://chatapp-adv-fe-production.up.railway.app',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true
+// }));
+app.options('*', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://chatapp-adv-fe-production.up.railway.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.status(204).end(); // No content response for preflight
+});
 // Explicitly handle OPTIONS requests if needed
 app.options('*', (0, cors_1.default)()); // Enable pre-flight for all routes
 app.use(express_1.default.json());
