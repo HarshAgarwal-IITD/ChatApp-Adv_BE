@@ -8,7 +8,7 @@ import cors from 'cors'
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-dotenv.config();
+dotenv.config();    
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL ||'SECRET';
@@ -27,7 +27,14 @@ const app = express();
 //   enablePreflight:true,
   
 // }
-app.use(cors());
+app.use(
+  cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
 
 
 
