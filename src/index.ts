@@ -19,22 +19,17 @@ mongoose.connect(MONGO_URL)
 
 
 const app = express();
-app.use(
-  cors({
-    origin: ["https://chatapp-adv-fe-production.up.railway.app","http://localhost:5173","http://localhost:5175",], // Your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // ✅ Allow cookies
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
+// const corsOptions={
+//   origin: ["https://chatapp-adv-fe-production.up.railway.app","http://localhost:5173","http://localhost:5175",], // Your frontend URL
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   credentials: true, // ✅ Allow cookies
+//   allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],
+//   enablePreflight:true,
+  
+// }
+app.use(cors());
 
-app.options('*', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://chatapp-adv-fe-production.up.railway.app");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.sendStatus(200);
-});
+
 
 app.use(express.json());
 app.use(cookieParser())
