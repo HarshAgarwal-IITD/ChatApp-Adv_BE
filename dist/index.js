@@ -19,7 +19,7 @@ console.log("Server running on port:", process.env.PORT);
 mongoose_1.default.connect(MONGO_URL);
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175",], // Your frontend URL
+    origin: ["https://chatapp-adv-fe-production.up.railway.app/", "http://localhost:5173", "http://localhost:5175",], // Your frontend URL
     credentials: true, // ✅ Allow cookies
 }));
 app.use(express_1.default.json());
