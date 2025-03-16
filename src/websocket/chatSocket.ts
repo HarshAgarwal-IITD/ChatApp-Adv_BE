@@ -175,7 +175,7 @@ import { RoomModel } from "../db";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
-import * as cookie from 'cookie';
+import  cookie from 'cookie';
 
 
 dotenv.config();
