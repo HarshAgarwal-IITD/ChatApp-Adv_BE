@@ -26,10 +26,13 @@ const app = (0, express_1.default)();
 //   enablePreflight:true,
 // }
 app.use((0, cors_1.default)({
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: 'https://chatapp-adv-fe-production.up.railway.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
+// Explicitly handle OPTIONS requests if needed
+app.options('*', (0, cors_1.default)()); // Enable pre-flight for all routes
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/api/auth', authRoutes_1.default);
