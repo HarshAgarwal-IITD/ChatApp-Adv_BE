@@ -28,7 +28,7 @@ const app = express();
   
 // }
 app.use(cors({
-  origin: 'https://chatapp-adv-fe-production.up.railway.app',
+  origin: ['https://chatapp-adv-fe-production.up.railway.app','*',],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
