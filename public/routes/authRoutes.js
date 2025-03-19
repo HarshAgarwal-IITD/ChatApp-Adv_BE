@@ -70,13 +70,13 @@ authRouter.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     if (user) {
         const token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, JWT_SECRET || "SECRET", { expiresIn: "1h" });
-        res.cookie("token", token, { httpOnly: false, sameSite: "lax", secure: false, path: '/' });
+        // res.cookie("token", token, { httpOnly: false, sameSite: "lax", secure: false  , path: '/'});
         return res.json({ message: "Login successful", token, username: user.username });
     }
 }));
 //@ts-ignore
 authRouter.post("/logout", middleware_1.authMiddleware, (req, res) => {
-    res.clearCookie("token");
+    // res.clearCookie("token");
     return res.json({ message: "Logged out" });
 });
 // ✅ Route to handle Google Sign-in
@@ -101,14 +101,16 @@ authRouter.post("/google-signin", (req, res) => __awaiter(void 0, void 0, void 0
                 password: uid, // You can leave password blank or store UID as password
             });
         }
+        console.log(user);
         // ✅ Generate JWT token for session
         const jwtToken = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, JWT_SECRET || "SECRET", { expiresIn: "1h" });
+        console.log(jwtToken);
         // ✅ Set cookie for authentication
-        res.cookie("token", jwtToken, {
-            httpOnly: false,
-            secure: false, // Set to true for HTTPS
-            sameSite: "lax",
-        });
+        // res.cookie("token", jwtToken, {
+        //   httpOnly: false,
+        //   secure: false, // Set to true for HTTPS
+        //   sameSite: "lax",
+        // });
         return res.status(200).json({ message: "Google Sign-in successful", token: jwtToken });
     }
     catch (error) {

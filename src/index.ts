@@ -19,31 +19,12 @@ mongoose.connect(MONGO_URL)
 
 
 const app = express();
-// const corsOptions={
-//   origin: ["https://chatapp-adv-fe-production.up.railway.app","http://localhost:5173","http://localhost:5175",], // Your frontend URL
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true, // ✅ Allow cookies
-//   allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],
-//   enablePreflight:true,
-  
-// }
-// app.use(cors({
-//   origin: 'https://chatapp-adv-fe-production.up.railway.app',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   credentials: true
-// }));
-const corsOptions = {
-  origin: 'https://chatapp-adv-fe-production.up.railway.app',
-  allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],
-  credentials: true,
-  enablePreflight: true
-}
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions))
-// Explicitly handle OPTIONS requests if needed
-app.options('*', cors()); // Enable pre-flight for all routes
+
+
+app.use(cors());
+
+
 
 
 app.use(express.json());

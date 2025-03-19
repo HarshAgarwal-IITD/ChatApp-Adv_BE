@@ -9,10 +9,9 @@ const JWT_SECRET = process.env.JWT_SECRET || "SECRET";
 export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
     try {
         // Extract token from cookiess
-        console.log(req.header)
-        const token = req.cookies.token;
-        console.log(token);
-        console.log(token,'in auths');
+       
+        const token = req.headers["authorization"] as string;
+   
 
 
         if (!token) {
@@ -23,10 +22,10 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
         }
 
         // Verify the token
-        const decoded =  jwt.verify(token, JWT_SECRET) as { userId: string; username: string };
+        const decoded = jwt.verify(token, JWT_SECRET) as unknown as { userId: string; username: string };
         console.log('token verified');
         // Attach user data to the request object
-        console.log(decoded)
+     
         //@ts-ignore
         req.userId = decoded.userId;
          //@ts-ignore

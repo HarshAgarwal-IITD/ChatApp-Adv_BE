@@ -21,10 +21,7 @@ function authMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Extract token from cookiess
-            console.log(req.header);
-            const token = req.cookies.token;
-            console.log(token);
-            console.log(token, 'in auths');
+            const token = req.headers["authorization"];
             if (!token) {
                 console.log('in not token');
                 return res.status(401).json({ message: "Login required" });
@@ -33,7 +30,6 @@ function authMiddleware(req, res, next) {
             const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
             console.log('token verified');
             // Attach user data to the request object
-            console.log(decoded);
             //@ts-ignore
             req.userId = decoded.userId;
             //@ts-ignore

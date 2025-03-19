@@ -24,8 +24,8 @@ function createRoom(req, res) {
             const userId = req.userId;
             const room = yield db_1.RoomModel.create({ name: roomName, members: [userId], messages: [] });
             console.log(room);
-            res.cookie("roomId", room._id, { httpOnly: true, sameSite: "strict", secure: false });
-            return res.status(201).json({ message: "Room created successfully", room });
+            // res.cookie("roomId", room._id, { httpOnly: true, sameSite: "strict", secure: false });
+            return res.status(201).json({ message: "Room created successfully", room, });
         }
         catch (error) {
             return res.status(500).json({ message: "Server error", error });

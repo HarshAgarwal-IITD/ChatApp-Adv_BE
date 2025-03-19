@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import {RoomModel} from "../db";
-import mongoose from "mongoose";
-import { messaging } from "firebase-admin";
 
 
 // **Create Room**
@@ -14,9 +12,9 @@ export async function  createRoom  (req: Request, res: Response){
     
     const room =await  RoomModel.create({ name: roomName, members: [userId], messages: [] })
     console.log(room);
-    res.cookie("roomId", room._id, { httpOnly: true, sameSite: "strict", secure: false });
+    // res.cookie("roomId", room._id, { httpOnly: true, sameSite: "strict", secure: false });
    
-    return res.status(201).json({ message: "Room created successfully", room });
+    return res.status(201).json({ message: "Room created successfully", room , });
   } catch (error) {
     return res.status(500).json({ message: "Server error", error });
   }
