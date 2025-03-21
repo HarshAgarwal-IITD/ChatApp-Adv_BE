@@ -22,7 +22,9 @@ const app = express();
 
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://chatapp-adv-fe-production.up.railway.app'
+}));
 
 
 
@@ -37,5 +39,5 @@ setupWebSocketServer(server);
 //@ts-ignore
 
 server.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on https://chatapp-advbe-production-b8a5.up.railway.app/:${PORT}`);
   });
