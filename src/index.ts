@@ -22,9 +22,7 @@ const app = express();
 
 
 
-app.use(cors({
-  origin: 'https://chatapp-adv-fe-production.up.railway.app'
-}));
+app.use(cors());
 
 
 
